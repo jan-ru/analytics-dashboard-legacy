@@ -3,7 +3,7 @@
  * Displays SAP Fiori color palettes and usage guidelines
  */
 
-import { SAP_COLORS } from '../shared/src/constants.js';
+import { SAP_COLORS } from '../shared/constants.js';
 
 export function showSapColorsViewSimple() {
   const content = document.getElementById('content');

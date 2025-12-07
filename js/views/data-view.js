@@ -2,16 +2,16 @@
  * Data View (Simplified)
  */
 
-import { getProcessedData, toggleSort, setFilter } from '../shared/src/data-processor.js';
-import { exportToExcel } from '../shared/src/excel-handler.js';
+import { processData, toggleSort, setFilter } from '../shared/data-processor.js';
+import { exportToExcel } from '../shared/excel-handler.js';
 
 export function showDataViewSimple() {
   renderTable();
 }
 
 function renderTable() {
-  const data = getProcessedData();
-  const { metrics } = window.appState;
+  const { currentData, filters, sortColumn, sortDirection, metrics } = window.appState;
+  const data = processData(currentData, filters, sortColumn, sortDirection);
 
   if (!data || data.length === 0) {
     document.getElementById('content').innerHTML = `
@@ -102,7 +102,8 @@ function attachHandlers() {
   // Export
   if (exportBtn) {
     exportBtn.addEventListener('click', async () => {
-      const data = getProcessedData();
+      const { currentData, filters, sortColumn, sortDirection } = window.appState;
+      const data = processData(currentData, filters, sortColumn, sortDirection);
       const success = await exportToExcel(data, 'data-export');
       alert(success ? 'Data exported successfully!' : 'Export failed');
     });

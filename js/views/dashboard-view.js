@@ -2,9 +2,9 @@
  * Dashboard View (Simplified) - Overview Page
  */
 
-import { exportToExcel } from '../shared/src/excel-handler.js';
-import { MESSAGES, ICONS, UI, ROUTES, TIMING, DATA_DISPLAY } from '../shared/src/constants.js';
-import { showSuccess, showError } from '../shared/src/toast.js';
+import { exportToExcel } from '../shared/excel-handler.js';
+import { MESSAGES, ICONS, UI, ROUTES, TIMING, DATA_DISPLAY } from '../shared/constants.js';
+import { showSuccess, showError } from '../shared/toast.js';
 
 export function showDashboardViewSimple() {
   const { currentData, metrics, fileName } = window.appState;

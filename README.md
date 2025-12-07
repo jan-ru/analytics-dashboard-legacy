@@ -19,9 +19,8 @@
 ## Technology Stack
 
 - **UI5 Web Components** v1.24.0
-- **Chart.js** v4.4.0
-- **ExcelJS** v4.4.0 (via shared utilities)
-- **OpenUI5 Router** for hash-based routing
+- **Routing**: Native Hash / OpenUI5
+- **Testing**: Vitest v1.0.0 (via local shared utilities)
 - **ES Modules** for modern JavaScript
 - **No Build Tools** - Works with any web server
 
@@ -36,16 +35,11 @@
 
 1. **Clone the repository**
    ```bash
-   git clone --recursive https://github.com/yourusername/analytics-dashboard-legacy.git
+   git clone https://github.com/yourusername/analytics-dashboard-legacy.git
    cd analytics-dashboard-legacy
    ```
 
-   Note: The `--recursive` flag is important to clone the shared utilities submodule.
-
-2. **Initialize submodules** (if you forgot `--recursive`)
-   ```bash
-   git submodule update --init --recursive
-   ```
+2. **Start a local web server (Skip step 2 if using start.sh)**
 
 3. **Start a local web server**
 
@@ -82,6 +76,13 @@ analytics-dashboard-legacy/
 ├── js/
 │   ├── app.js                 # Application bootstrap
 │   ├── router.js              # Hash-based routing
+│   ├── shared/                # Shared utilities (Local)
+│   │   ├── excel-handler.js   # Excel processing
+│   │   ├── data-processor.js  # Data transformation
+│   │   ├── chart-utils.js     # Chart.js helpers
+│   │   ├── tile-renderer.js   # Tile rendering
+│   │   ├── toast.js           # Notifications
+│   │   └── constants.js       # App constants
 │   └── views/                 # View components
 │       ├── upload-view.js
 │       ├── dashboard-view.js
@@ -101,17 +102,6 @@ analytics-dashboard-legacy/
 ├── docs/                       # Documentation
 │   ├── QUICK_START.md
 │   └── requirements.md
-│
-└── shared/                     # Git submodule (shared utilities)
-    ├── src/
-    │   ├── excel-handler.js   # Excel processing
-    │   ├── data-processor.js  # Data transformation
-    │   ├── chart-utils.js     # Chart.js helpers
-    │   ├── tile-renderer.js   # Tile rendering
-    │   ├── toast.js           # Notifications
-    │   └── constants.js       # App constants
-    └── assets/
-        └── sample-data/       # Test files
 ```
 
 ## How It Works
@@ -146,7 +136,7 @@ export function showMyView() {
 
 ### Shared Utilities
 
-Business logic is shared with the enterprise version via a git submodule:
+Business logic is locally integrated (formerly shared):
 - Excel file processing
 - Data transformation
 - Chart configuration
@@ -229,7 +219,7 @@ Requires **Import Maps** support for ES module resolution.
 
 1. Create `js/views/my-view.js`:
    ```javascript
-   import { SAP_COLORS } from '../shared/src/constants.js';
+   import { SAP_COLORS } from '../shared/constants.js';
 
    export function showMyView() {
      const content = document.getElementById('content');
@@ -249,28 +239,15 @@ Requires **Import Maps** support for ES module resolution.
 
 3. Add navigation item in `index.html`
 
-### Updating Shared Utilities
 
-```bash
-# Update to latest shared utilities
-cd shared
-git pull origin main
-cd ..
-git add shared
-git commit -m "Update shared utilities to latest version"
-```
 
 ## Troubleshooting
 
 ### Application doesn't load
 - Check browser console for errors
 - Verify you're using HTTP (not file://)
-- Ensure browser supports Import Maps
-- Check that shared submodule is initialized
-
 ### Import errors
-- Run `git submodule update --init --recursive`
-- Verify `shared/` directory exists and has content
+- Verify `js/shared/` directory exists and has content
 
 ### Excel upload fails
 - Check file format (.xlsx or .xls)

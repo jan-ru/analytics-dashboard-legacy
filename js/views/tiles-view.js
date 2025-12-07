@@ -8,7 +8,7 @@ import {
   renderMicroChartTile,
   initializeSlideTile,
   showMetricDetails
-} from '../shared/src/tile-renderer.js';
+} from '../shared/tile-renderer.js';
 
 let slideInterval;
 

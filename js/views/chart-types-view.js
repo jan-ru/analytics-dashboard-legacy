@@ -3,8 +3,8 @@
  * Displays: Line, Bar, Radar, Doughnut, Polar Area, and Bubble charts
  */
 
-import { MESSAGES, ICONS, TIMING, SAP_COLORS } from '../shared/src/constants.js';
-import { showSuccess, showError } from '../shared/src/toast.js';
+import { MESSAGES, ICONS, TIMING, SAP_COLORS } from '../shared/constants.js';
+import { showSuccess, showError } from '../shared/toast.js';
 
 let charts = {};
 

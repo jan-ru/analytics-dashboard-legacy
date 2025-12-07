@@ -2,17 +2,17 @@
  * Router (OpenUI5 Router version)
  */
 
-import { showUploadViewSimple } from './views/upload-view-simple.js';
-import { showDashboardViewSimple } from './views/dashboard-view-simple.js';
-import { showDataViewSimple } from './views/data-view-simple.js';
-import { showAboutViewSimple } from './views/about-view-simple.js';
-import { showTilesViewSimple } from './views/tiles-view-simple.js';
-import { showChartTypesViewSimple } from './views/chart-types-view-simple.js';
-import { showUi5ComponentsViewSimple } from './views/ui5-components-view-simple.js';
-import { showSapIconsViewSimple } from './views/sap-icons-view-simple.js';
-import { showSapColorsViewSimple } from './views/sap-colors-view-simple.js';
-import { ROUTES, MESSAGES } from './shared/src/constants.js';
-import { showError } from './shared/src/toast.js';
+import { showUploadViewSimple } from './views/upload-view.js';
+import { showDashboardViewSimple } from './views/dashboard-view.js';
+import { showDataViewSimple } from './views/data-view.js';
+import { showAboutViewSimple } from './views/about-view.js';
+import { showTilesViewSimple } from './views/tiles-view.js';
+import { showChartTypesViewSimple } from './views/chart-types-view.js';
+import { showUi5ComponentsViewSimple } from './views/ui5-components-view.js';
+import { showSapIconsViewSimple } from './views/sap-icons-view.js';
+import { showSapColorsViewSimple } from './views/sap-colors-view.js';
+import { ROUTES, MESSAGES } from './shared/constants.js';
+import { showError } from './shared/toast.js';
 
 let router;
 let hashChanger;
@@ -51,11 +51,20 @@ const routeConfig = {
  * Handle hash change
  */
 function handleHashChange(hash) {
-  // Remove leading # or #/ from hash
-  const cleanHash = hash.replace(/^#\/?/, '');
-  const route = cleanHash ? `/${cleanHash}` : '/';
+  // Normalize hash: remove leading # and /
+  const cleanPath = hash.replace(/^#[/]?/, '').replace(/^\//, ''); // e.g. "upload" or "about"
+  const route = '/' + cleanPath; // e.g. "/upload" or "/about" to match ROUTES constants which have leading /
+
+  // Default to UPLOAD if empty
+  if (route === '/') {
+    console.log('📍 Empty route, redirecting to UPLOAD');
+    navigateTo(ROUTES.UPLOAD);
+    return;
+  }
 
   console.log('📍 Route changed:', route);
+  console.log('🔑 Available routes:', Object.keys(routeConfig));
+  console.log('Matched handler:', !!routeConfig[route]);
 
   // DEBUG: Check content element before routing
   const content = document.getElementById('content');
@@ -125,14 +134,14 @@ export function initRouter() {
   }, 2000);
 
   try {
-    sap.ui.require(['sap/ui/core/routing/HashChanger'], function(HashChanger) {
+    sap.ui.require(['sap/ui/core/routing/HashChanger'], function (HashChanger) {
       clearTimeout(timeout);
 
       // Get the HashChanger instance
       hashChanger = HashChanger.getInstance();
 
       // Set up event listener for hash changes
-      hashChanger.attachEvent('hashChanged', function(oEvent) {
+      hashChanger.attachEvent('hashChanged', function (oEvent) {
         const newHash = oEvent.getParameter('newHash');
         console.log('🔔 HashChanged event:', newHash);
         handleHashChange(newHash);

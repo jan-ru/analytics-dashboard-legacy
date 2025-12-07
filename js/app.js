@@ -2,8 +2,8 @@
  * Application Bootstrap (Simplified version with UI5 Web Components)
  */
 
-import { initRouter } from './router-simple.js';
-import { initAppState } from './shared/src/data-processor.js';
+import { initRouter, navigateTo } from './router.js';
+import { initAppState } from './shared/data-processor.js';
 
 /**
  * Initialize the application
@@ -50,7 +50,7 @@ function waitForOpenUI5() {
     }, 3000); // 3 second timeout
 
     if (window.sap && window.sap.ui) {
-      sap.ui.getCore().attachInit(function() {
+      sap.ui.getCore().attachInit(function () {
         if (!resolved) {
           resolved = true;
           clearTimeout(timeout);
@@ -133,7 +133,7 @@ function setupNavigation() {
       item.classList.add('active');
 
       // Navigate
-      window.location.hash = route;
+      navigateTo(route);
     });
   });
 }

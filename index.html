@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Analytics Dashboard</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>📊</text></svg>">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>📊</text></svg>">
 
   <!-- Import Map for UI5 Web Components -->
   <script type="importmap">
@@ -27,16 +29,13 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
   <!-- OpenUI5 Core for Routing -->
-  <script
-    id="sap-ui-bootstrap"
-    src="https://sdk.openui5.org/resources/sap-ui-core.js"
-    data-sap-ui-theme="sap_horizon"
-    data-sap-ui-libs="sap.ui.core"
-    data-sap-ui-compatVersion="edge"
-    data-sap-ui-async="true"
-    data-sap-ui-preload="async"
+  <!-- OpenUI5 Core for Routing (DISABLED for Simple App to use native routing) -->
+  <!-- 
+  <script id="sap-ui-bootstrap" src="https://sdk.openui5.org/resources/sap-ui-core.js" data-sap-ui-theme="sap_horizon"
+    data-sap-ui-libs="sap.ui.core" data-sap-ui-compatVersion="edge" data-sap-ui-async="true" data-sap-ui-preload="async"
     data-sap-ui-xx-waitForTheme="true">
-  </script>
+    </script>
+  -->
 
   <!-- UI5 Web Components -->
   <!-- Note: Theme loading errors are non-critical and can be ignored -->
@@ -48,7 +47,11 @@
 
   <!-- Styles -->
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -60,7 +63,7 @@
       background: #0854a0;
       color: white;
       padding: 1rem 2rem;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     .header h1 {
@@ -108,7 +111,7 @@
       border-radius: 8px;
       padding: 1.5rem;
       margin-bottom: 1.5rem;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
 
     .card-header {
@@ -161,7 +164,7 @@
       padding: 1rem;
       cursor: pointer;
       transition: all 0.2s;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
       border-left: 4px solid #0854a0;
       min-height: 140px;
       display: flex;
@@ -170,19 +173,30 @@
     }
 
     .sap-tile:hover {
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
       transform: translateY(-2px);
     }
 
     .sap-tile:active {
       transform: translateY(0);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
 
-    .sap-tile.tile-green { border-left-color: #107e3e; }
-    .sap-tile.tile-orange { border-left-color: #e26800; }
-    .sap-tile.tile-red { border-left-color: #bb0000; }
-    .sap-tile.tile-purple { border-left-color: #91007b; }
+    .sap-tile.tile-green {
+      border-left-color: #107e3e;
+    }
+
+    .sap-tile.tile-orange {
+      border-left-color: #e26800;
+    }
+
+    .sap-tile.tile-red {
+      border-left-color: #bb0000;
+    }
+
+    .sap-tile.tile-purple {
+      border-left-color: #91007b;
+    }
 
     .tile-header {
       font-size: 0.75rem;
@@ -200,10 +214,21 @@
       margin: 0.5rem 0;
     }
 
-    .sap-tile.tile-green .tile-value { color: #107e3e; }
-    .sap-tile.tile-orange .tile-value { color: #e26800; }
-    .sap-tile.tile-red .tile-value { color: #bb0000; }
-    .sap-tile.tile-purple .tile-value { color: #91007b; }
+    .sap-tile.tile-green .tile-value {
+      color: #107e3e;
+    }
+
+    .sap-tile.tile-orange .tile-value {
+      color: #e26800;
+    }
+
+    .sap-tile.tile-red .tile-value {
+      color: #bb0000;
+    }
+
+    .sap-tile.tile-purple .tile-value {
+      color: #91007b;
+    }
 
     .tile-footer {
       font-size: 0.75rem;
@@ -309,10 +334,21 @@
       font-size: 1.75rem;
     }
 
-    .sap-tile.tile-green .numeric-icon { background: #e8f5e9; }
-    .sap-tile.tile-orange .numeric-icon { background: #fff3e0; }
-    .sap-tile.tile-red .numeric-icon { background: #ffebee; }
-    .sap-tile.tile-purple .numeric-icon { background: #f3e5f5; }
+    .sap-tile.tile-green .numeric-icon {
+      background: #e8f5e9;
+    }
+
+    .sap-tile.tile-orange .numeric-icon {
+      background: #fff3e0;
+    }
+
+    .sap-tile.tile-red .numeric-icon {
+      background: #ffebee;
+    }
+
+    .sap-tile.tile-purple .numeric-icon {
+      background: #f3e5f5;
+    }
 
     .numeric-content-data {
       display: flex;
@@ -643,7 +679,7 @@
       padding: 1.5rem;
       border-radius: 8px;
       text-align: center;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
 
     .kpi-value {
@@ -678,7 +714,8 @@
       margin: 1rem 0;
     }
 
-    th, td {
+    th,
+    td {
       padding: 0.75rem;
       text-align: left;
       border-bottom: 1px solid #ddd;
@@ -737,7 +774,7 @@
     @font-face {
       font-family: 'SAP-icons';
       src: url('https://sapui5.hana.ondemand.com/sdk/resources/sap/ui/core/themes/base/fonts/SAP-icons.woff2') format('woff2'),
-           url('https://sapui5.hana.ondemand.com/sdk/resources/sap/ui/core/themes/base/fonts/SAP-icons.woff') format('woff');
+        url('https://sapui5.hana.ondemand.com/sdk/resources/sap/ui/core/themes/base/fonts/SAP-icons.woff') format('woff');
       font-weight: normal;
       font-style: normal;
     }
@@ -791,10 +828,21 @@
       margin: 1rem 0;
     }
 
-    .sap-tile.kpi.tile-green .kpi-tile-value { color: #107e3e; }
-    .sap-tile.kpi.tile-orange .kpi-tile-value { color: #e26800; }
-    .sap-tile.kpi.tile-red .kpi-tile-value { color: #bb0000; }
-    .sap-tile.kpi.tile-purple .kpi-tile-value { color: #91007b; }
+    .sap-tile.kpi.tile-green .kpi-tile-value {
+      color: #107e3e;
+    }
+
+    .sap-tile.kpi.tile-orange .kpi-tile-value {
+      color: #e26800;
+    }
+
+    .sap-tile.kpi.tile-red .kpi-tile-value {
+      color: #bb0000;
+    }
+
+    .sap-tile.kpi.tile-purple .kpi-tile-value {
+      color: #91007b;
+    }
 
     .kpi-tile-unit {
       font-size: 1.25rem;
@@ -868,10 +916,21 @@
       transform: scale(1.1);
     }
 
-    .sap-tile.launch.tile-green .launch-icon { color: #107e3e; }
-    .sap-tile.launch.tile-orange .launch-icon { color: #e26800; }
-    .sap-tile.launch.tile-red .launch-icon { color: #bb0000; }
-    .sap-tile.launch.tile-purple .launch-icon { color: #91007b; }
+    .sap-tile.launch.tile-green .launch-icon {
+      color: #107e3e;
+    }
+
+    .sap-tile.launch.tile-orange .launch-icon {
+      color: #e26800;
+    }
+
+    .sap-tile.launch.tile-red .launch-icon {
+      color: #bb0000;
+    }
+
+    .sap-tile.launch.tile-purple .launch-icon {
+      color: #91007b;
+    }
 
     .launch-title {
       font-size: 1.125rem;
@@ -1046,13 +1105,18 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+      background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
       animation: shimmer 2s infinite;
     }
 
     @keyframes shimmer {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
+      0% {
+        transform: translateX(-100%);
+      }
+
+      100% {
+        transform: translateX(100%);
+      }
     }
 
     .progress-percentage {
@@ -1107,8 +1171,15 @@
     }
 
     @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.05);
+      }
     }
 
     .notification-badge::after {
@@ -1346,7 +1417,7 @@
       background: #f5f5f5;
       border-color: #0854a0;
       transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
     .icon-showcase-icon {
@@ -1400,7 +1471,7 @@
     .color-swatch-item:hover {
       border-color: #0854a0;
       transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
     .color-swatch-preview {
@@ -1450,12 +1521,12 @@
       cursor: pointer;
       transition: transform 0.2s ease;
       border: 2px solid white;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     .chart-palette-color:hover {
       transform: scale(1.1);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
     .copy-palette-btn {
@@ -1475,14 +1546,14 @@
 
     /* UI5 Components Showcase Styles */
     .demo-card {
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       border-radius: 8px;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .demo-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
     }
 
     .ui5-card-header {
@@ -1547,17 +1618,20 @@
        REMOVE AFTER FIXING
        ======================================== */
     #content {
-      background: rgba(0, 255, 0, 0.1) !important; /* Lime tint - visible if element renders */
+      background: rgba(0, 255, 0, 0.1) !important;
+      /* Lime tint - visible if element renders */
       min-height: 500px !important;
       border: 5px solid red !important;
     }
 
-    #content > * {
-      border: 1px dotted blue !important; /* Show all direct children */
+    #content>* {
+      border: 1px dotted blue !important;
+      /* Show all direct children */
     }
 
     #content .card {
-      background: rgba(255, 255, 0, 0.3) !important; /* Yellow highlight for cards */
+      background: rgba(255, 255, 0, 0.3) !important;
+      /* Yellow highlight for cards */
     }
 
     /* Force visibility */
@@ -1566,9 +1640,11 @@
       visibility: visible !important;
       opacity: 1 !important;
     }
+
     /* ======================================== */
   </style>
 </head>
+
 <body>
   <!-- Header -->
   <div class="header">
@@ -1599,6 +1675,7 @@
   </div>
 
   <!-- Application -->
-  <script type="module" src="js/app-simple.js"></script>
+  <script type="module" src="js/app.js"></script>
 </body>
+
 </html>

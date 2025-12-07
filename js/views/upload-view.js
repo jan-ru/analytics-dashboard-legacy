@@ -2,11 +2,11 @@
  * Upload View (Simplified)
  */
 
-import { importExcel } from '../shared/src/excel-handler.js';
-import { updateAppState } from '../shared/src/data-processor.js';
+import { importExcel } from '../shared/excel-handler.js';
+import { updateAppState } from '../shared/data-processor.js';
 import { navigateTo } from '../router.js';
-import { SAP_COLORS, ICONS, MESSAGES, FILE_UPLOAD, UI, TIMING, ROUTES } from '../shared/src/constants.js';
-import { showSuccess, showError, showInfo } from '../shared/src/toast.js';
+import { SAP_COLORS, ICONS, MESSAGES, FILE_UPLOAD, UI, TIMING, ROUTES } from '../shared/constants.js';
+import { showSuccess, showError, showInfo } from '../shared/toast.js';
 
 export function showUploadViewSimple() {
   const content = document.getElementById(UI.CONTENT_ID);
