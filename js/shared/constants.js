@@ -17,7 +17,12 @@ export const ROUTES = {
   SAP_ICONS: '/sap-icons',
   SAP_COLORS: '/sap-colors',
   DATA: '/data',
-  ABOUT: '/about'
+  ABOUT: '/about',
+  UPLOAD_COLLECTION: '/upload-collection',
+  TOOLBAR: '/toolbar',
+  TREE: '/tree',
+  PRODUCT_SWITCH: '/product-switch',
+  CALENDAR: '/calendar'
 };
 
 // ============================================================================

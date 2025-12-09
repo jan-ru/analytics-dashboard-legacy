@@ -119,191 +119,193 @@ export function showSapColorsViewSimple() {
   ];
 
   content.innerHTML = `
-    <div class="toolbar">
-      <h2 style="margin: 0;">🎨 SAP Fiori Color Schemes</h2>
-    </div>
+    <ui5-page style="height: 100%;">
+      <ui5-bar slot="header" design="Header">
+        <ui5-title level="H5" slot="startContent">SAP Fiori Color Schemes</ui5-title>
+      </ui5-bar>
 
-    <div class="message message-info">
-      SAP Fiori uses a carefully designed color palette for consistency, accessibility, and optimal user experience.
-      Click any color to copy its hex code.
-    </div>
+      <div style="padding: 1rem;">
+        <div class="message message-info">
+          SAP Fiori uses a carefully designed color palette for consistency, accessibility, and optimal user experience.
+          Click any color to copy its hex code.
+        </div>
 
-    <!-- Color Schemes -->
-    <div class="card">
-      <div class="card-header">SAP Fiori Color Palette</div>
-      <p style="margin: 1rem 0; color: #666;">
-        The official SAP Fiori color palette with semantic meanings and usage guidelines.
-      </p>
+        <!-- Color Schemes -->
+        <div class="card">
+          <div class="card-header">SAP Fiori Color Palette</div>
+          <p style="margin: 1rem 0; color: #666;">
+            The official SAP Fiori color palette with semantic meanings and usage guidelines.
+          </p>
 
-      <div style="display: grid; gap: 2rem; margin-top: 1.5rem;">
-        ${colorSchemes.map(scheme => `
-          <div class="color-scheme-section">
-            <div class="color-scheme-header">
-              <h3 style="margin: 0; font-size: 1.1rem;">${scheme.name}</h3>
-              <p style="margin: 0.5rem 0 0 0; color: #666; font-size: 0.9rem;">${scheme.description}</p>
-            </div>
-            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
-              ${scheme.colors.map(color => `
-                <div class="color-swatch-item" data-hex="${color.hex}">
-                  <div class="color-swatch-preview" style="background: ${color.hex};"></div>
-                  <div class="color-swatch-info">
-                    <div class="color-swatch-name">${color.name}</div>
-                    <div class="color-swatch-hex">${color.hex.toUpperCase()}</div>
-                    <div class="color-swatch-usage">${color.usage}</div>
-                  </div>
+          <div style="display: grid; gap: 2rem; margin-top: 1.5rem;">
+            ${colorSchemes.map(scheme => `
+              <div class="color-scheme-section">
+                <div class="color-scheme-header">
+                  <h3 style="margin: 0; font-size: 1.1rem;">${scheme.name}</h3>
+                  <p style="margin: 0.5rem 0 0 0; color: #666; font-size: 0.9rem;">${scheme.description}</p>
                 </div>
-              `).join('')}
-            </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                  ${scheme.colors.map(color => `
+                    <div class="color-swatch-item" data-hex="${color.hex}">
+                      <div class="color-swatch-preview" style="background: ${color.hex};"></div>
+                      <div class="color-swatch-info">
+                        <div class="color-swatch-name">${color.name}</div>
+                        <div class="color-swatch-hex">${color.hex.toUpperCase()}</div>
+                        <div class="color-swatch-usage">${color.usage}</div>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            `).join('')}
           </div>
-        `).join('')}
-      </div>
-    </div>
+        </div>
 
-    <!-- Chart Palettes -->
-    <div class="card" style="margin-top: 2rem;">
-      <div class="card-header">Chart.js Color Palettes</div>
-      <p style="margin: 1rem 0; color: #666;">
-        Ready-to-use color palettes for data visualization with Chart.js.
-      </p>
+        <!-- Chart Palettes -->
+        <div class="card" style="margin-top: 2rem;">
+          <div class="card-header">Chart.js Color Palettes</div>
+          <p style="margin: 1rem 0; color: #666;">
+            Ready-to-use color palettes for data visualization with Chart.js.
+          </p>
 
-      <div style="display: grid; gap: 1.5rem; margin-top: 1.5rem;">
-        ${chartPalettes.map(palette => `
-          <div class="chart-palette-section">
+          <div style="display: grid; gap: 1.5rem; margin-top: 1.5rem;">
+            ${chartPalettes.map(palette => `
+              <div class="chart-palette-section">
+                <div>
+                  <h3 style="margin: 0; font-size: 1rem;">${palette.name}</h3>
+                  <p style="margin: 0.5rem 0 1rem 0; color: #666; font-size: 0.875rem;">${palette.description}</p>
+                </div>
+                <div class="chart-palette-colors">
+                  ${palette.colors.map((color, idx) => `
+                    <div class="chart-palette-color"
+                         style="background: ${color};"
+                         data-hex="${color}"
+                         title="Color ${idx + 1}: ${color}">
+                    </div>
+                  `).join('')}
+                </div>
+                <div style="margin-top: 1rem;">
+                  <button class="copy-palette-btn" data-palette='${JSON.stringify(palette.colors)}'>
+                    📋 Copy Palette Array
+                  </button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <!-- Usage Guidelines -->
+        <div class="card" style="margin-top: 2rem;">
+          <div class="card-header">Color Usage Guidelines</div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
             <div>
-              <h3 style="margin: 0; font-size: 1rem;">${palette.name}</h3>
-              <p style="margin: 0.5rem 0 1rem 0; color: #666; font-size: 0.875rem;">${palette.description}</p>
+              <strong>✅ Do</strong>
+              <ul style="margin: 0.5rem 0 0 1.5rem; color: #666; font-size: 0.9rem;">
+                <li>Use semantic colors for their intended purpose (green for success, red for errors)</li>
+                <li>Maintain sufficient contrast ratios (4.5:1 for text, 3:1 for UI elements)</li>
+                <li>Use light variants for backgrounds and highlights</li>
+                <li>Test colors with accessibility tools</li>
+                <li>Provide non-color indicators (icons, text) for important information</li>
+              </ul>
             </div>
-            <div class="chart-palette-colors">
-              ${palette.colors.map((color, idx) => `
-                <div class="chart-palette-color"
-                     style="background: ${color};"
-                     data-hex="${color}"
-                     title="Color ${idx + 1}: ${color}">
-                </div>
-              `).join('')}
+            <div>
+              <strong>❌ Don't</strong>
+              <ul style="margin: 0.5rem 0 0 1.5rem; color: #666; font-size: 0.9rem;">
+                <li>Use red for positive states or green for errors</li>
+                <li>Rely solely on color to convey information</li>
+                <li>Use too many different colors in one view</li>
+                <li>Use brand colors for semantic states</li>
+                <li>Override colors without considering accessibility</li>
+              </ul>
             </div>
-            <div style="margin-top: 1rem;">
-              <button class="copy-palette-btn" data-palette='${JSON.stringify(palette.colors)}'>
-                📋 Copy Palette Array
-              </button>
+            <div>
+              <strong>💡 Best Practices</strong>
+              <ul style="margin: 0.5rem 0 0 1.5rem; color: #666; font-size: 0.9rem;">
+                <li>Limit palette to 5-6 colors per chart</li>
+                <li>Use consistent colors across the application</li>
+                <li>Add transparency (40-80) for overlays and backgrounds</li>
+                <li>Consider color-blind users (8% of males, 0.5% of females)</li>
+                <li>Test in both light and dark environments</li>
+              </ul>
             </div>
           </div>
-        `).join('')}
-      </div>
-    </div>
-
-    <!-- Usage Guidelines -->
-    <div class="card" style="margin-top: 2rem;">
-      <div class="card-header">Color Usage Guidelines</div>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
-        <div>
-          <strong>✅ Do</strong>
-          <ul style="margin: 0.5rem 0 0 1.5rem; color: #666; font-size: 0.9rem;">
-            <li>Use semantic colors for their intended purpose (green for success, red for errors)</li>
-            <li>Maintain sufficient contrast ratios (4.5:1 for text, 3:1 for UI elements)</li>
-            <li>Use light variants for backgrounds and highlights</li>
-            <li>Test colors with accessibility tools</li>
-            <li>Provide non-color indicators (icons, text) for important information</li>
-          </ul>
         </div>
-        <div>
-          <strong>❌ Don't</strong>
-          <ul style="margin: 0.5rem 0 0 1.5rem; color: #666; font-size: 0.9rem;">
-            <li>Use red for positive states or green for errors</li>
-            <li>Rely solely on color to convey information</li>
-            <li>Use too many different colors in one view</li>
-            <li>Use brand colors for semantic states</li>
-            <li>Override colors without considering accessibility</li>
-          </ul>
-        </div>
-        <div>
-          <strong>💡 Best Practices</strong>
-          <ul style="margin: 0.5rem 0 0 1.5rem; color: #666; font-size: 0.9rem;">
-            <li>Limit palette to 5-6 colors per chart</li>
-            <li>Use consistent colors across the application</li>
-            <li>Add transparency (40-80) for overlays and backgrounds</li>
-            <li>Consider color-blind users (8% of males, 0.5% of females)</li>
-            <li>Test in both light and dark environments</li>
-          </ul>
-        </div>
-      </div>
-    </div>
 
-    <!-- Color Accessibility -->
-    <div class="card" style="margin-top: 2rem;">
-      <div class="card-header">Accessibility & WCAG Compliance</div>
-      <div style="margin-top: 1rem;">
-        <table style="width: 100%; border-collapse: collapse;">
-          <thead>
-            <tr style="background: #f5f5f5;">
-              <th style="padding: 0.75rem; text-align: left; border: 1px solid #ddd;">Color</th>
-              <th style="padding: 0.75rem; text-align: left; border: 1px solid #ddd;">On White</th>
-              <th style="padding: 0.75rem; text-align: left; border: 1px solid #ddd;">On Black</th>
-              <th style="padding: 0.75rem; text-align: left; border: 1px solid #ddd;">Best Use</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">
-                <span style="display: inline-block; width: 20px; height: 20px; background: ${SAP_COLORS.BLUE}; vertical-align: middle; margin-right: 0.5rem;"></span>
-                Blue
-              </td>
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">✅ AAA (11.6:1)</td>
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">❌ Fail (1.8:1)</td>
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">Text on light backgrounds</td>
-            </tr>
-            <tr style="background: #fafafa;">
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">
-                <span style="display: inline-block; width: 20px; height: 20px; background: ${SAP_COLORS.GREEN}; vertical-align: middle; margin-right: 0.5rem;"></span>
-                Green
-              </td>
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">✅ AAA (8.2:1)</td>
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">⚠️ AA (2.6:1)</td>
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">Success indicators, icons</td>
-            </tr>
-            <tr>
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">
-                <span style="display: inline-block; width: 20px; height: 20px; background: ${SAP_COLORS.ORANGE}; vertical-align: middle; margin-right: 0.5rem;"></span>
-                Orange
-              </td>
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">✅ AA (4.7:1)</td>
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">⚠️ AA (4.5:1)</td>
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">Warnings with icon/text</td>
-            </tr>
-            <tr style="background: #fafafa;">
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">
-                <span style="display: inline-block; width: 20px; height: 20px; background: ${SAP_COLORS.RED}; vertical-align: middle; margin-right: 0.5rem;"></span>
-                Red
-              </td>
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">✅ AAA (9.7:1)</td>
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">❌ Fail (2.2:1)</td>
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">Errors with clear text</td>
-            </tr>
-            <tr>
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">
-                <span style="display: inline-block; width: 20px; height: 20px; background: ${SAP_COLORS.GRAY}; vertical-align: middle; margin-right: 0.5rem;"></span>
-                Gray
-              </td>
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">✅ AAA (5.7:1)</td>
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">⚠️ AA (3.7:1)</td>
-              <td style="padding: 0.75rem; border: 1px solid #ddd;">Body text</td>
-            </tr>
-          </tbody>
-        </table>
-        <p style="margin: 1rem 0 0 0; color: #666; font-size: 0.875rem;">
-          <strong>Note:</strong> Contrast ratios are approximate. WCAG AA requires 4.5:1 for normal text and 3:1 for large text (18pt+).
-          AAA requires 7:1 for normal text and 4.5:1 for large text.
-        </p>
-      </div>
-    </div>
+        <!-- Color Accessibility -->
+        <div class="card" style="margin-top: 2rem;">
+          <div class="card-header">Accessibility & WCAG Compliance</div>
+          <div style="margin-top: 1rem;">
+            <table style="width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr style="background: #f5f5f5;">
+                  <th style="padding: 0.75rem; text-align: left; border: 1px solid #ddd;">Color</th>
+                  <th style="padding: 0.75rem; text-align: left; border: 1px solid #ddd;">On White</th>
+                  <th style="padding: 0.75rem; text-align: left; border: 1px solid #ddd;">On Black</th>
+                  <th style="padding: 0.75rem; text-align: left; border: 1px solid #ddd;">Best Use</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 0.75rem; border: 1px solid #ddd;">
+                    <span style="display: inline-block; width: 20px; height: 20px; background: ${SAP_COLORS.BLUE}; vertical-align: middle; margin-right: 0.5rem;"></span>
+                    Blue
+                  </td>
+                  <td style="padding: 0.75rem; border: 1px solid #ddd;">✅ AAA (11.6:1)</td>
+                  <td style="padding: 0.75rem; border: 1px solid #ddd;">❌ Fail (1.8:1)</td>
+                  <td style="padding: 0.75rem; border: 1px solid #ddd;">Text on light backgrounds</td>
+                </tr>
+                <tr style="background: #fafafa;">
+                  <td style="padding: 0.75rem; border: 1px solid #ddd;">
+                    <span style="display: inline-block; width: 20px; height: 20px; background: ${SAP_COLORS.GREEN}; vertical-align: middle; margin-right: 0.5rem;"></span>
+                    Green
+                  </td>
+                  <td style="padding: 0.75rem; border: 1px solid #ddd;">✅ AAA (8.2:1)</td>
+                  <td style="padding: 0.75rem; border: 1px solid #ddd;">⚠️ AA (2.6:1)</td>
+                  <td style="padding: 0.75rem; border: 1px solid #ddd;">Success indicators, icons</td>
+                </tr>
+                <tr>
+                  <td style="padding: 0.75rem; border: 1px solid #ddd;">
+                    <span style="display: inline-block; width: 20px; height: 20px; background: ${SAP_COLORS.ORANGE}; vertical-align: middle; margin-right: 0.5rem;"></span>
+                    Orange
+                  </td>
+                  <td style="padding: 0.75rem; border: 1px solid #ddd;">✅ AA (4.7:1)</td>
+                  <td style="padding: 0.75rem; border: 1px solid #ddd;">⚠️ AA (4.5:1)</td>
+                  <td style="padding: 0.75rem; border: 1px solid #ddd;">Warnings with icon/text</td>
+                </tr>
+                <tr style="background: #fafafa;">
+                  <td style="padding: 0.75rem; border: 1px solid #ddd;">
+                    <span style="display: inline-block; width: 20px; height: 20px; background: ${SAP_COLORS.RED}; vertical-align: middle; margin-right: 0.5rem;"></span>
+                    Red
+                  </td>
+                  <td style="padding: 0.75rem; border: 1px solid #ddd;">✅ AAA (9.7:1)</td>
+                  <td style="padding: 0.75rem; border: 1px solid #ddd;">❌ Fail (2.2:1)</td>
+                  <td style="padding: 0.75rem; border: 1px solid #ddd;">Errors with clear text</td>
+                </tr>
+                <tr>
+                  <td style="padding: 0.75rem; border: 1px solid #ddd;">
+                    <span style="display: inline-block; width: 20px; height: 20px; background: ${SAP_COLORS.GRAY}; vertical-align: middle; margin-right: 0.5rem;"></span>
+                    Gray
+                  </td>
+                  <td style="padding: 0.75rem; border: 1px solid #ddd;">✅ AAA (5.7:1)</td>
+                  <td style="padding: 0.75rem; border: 1px solid #ddd;">⚠️ AA (3.7:1)</td>
+                  <td style="padding: 0.75rem; border: 1px solid #ddd;">Body text</td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="margin: 1rem 0 0 0; color: #666; font-size: 0.875rem;">
+              <strong>Note:</strong> Contrast ratios are approximate. WCAG AA requires 4.5:1 for normal text and 3:1 for large text (18pt+).
+              AAA requires 7:1 for normal text and 4.5:1 for large text.
+            </p>
+          </div>
+        </div>
 
-    <!-- Code Examples -->
-    <div class="card" style="margin-top: 2rem;">
-      <div class="card-header">Code Examples</div>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
-        <div>
-          <strong>JavaScript (Import from constants.js)</strong>
-          <pre style="background: #f5f5f5; padding: 1rem; border-radius: 4px; margin-top: 0.5rem; overflow-x: auto;"><code>import { SAP_COLORS } from './constants.js';
+        <!-- Code Examples -->
+        <div class="card" style="margin-top: 2rem;">
+          <div class="card-header">Code Examples</div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
+            <div>
+              <strong>JavaScript (Import from constants.js)</strong>
+              <pre style="background: #f5f5f5; padding: 1rem; border-radius: 4px; margin-top: 0.5rem; overflow-x: auto;"><code>import { SAP_COLORS } from './constants.js';
 
 // Use in Chart.js
 backgroundColor: SAP_COLORS.BLUE,
@@ -311,10 +313,10 @@ borderColor: SAP_COLORS.BLUE_DARK,
 
 // Use in styles
 element.style.color = SAP_COLORS.GREEN;</code></pre>
-        </div>
-        <div>
-          <strong>CSS Variables (Alternative)</strong>
-          <pre style="background: #f5f5f5; padding: 1rem; border-radius: 4px; margin-top: 0.5rem; overflow-x: auto;"><code>:root {
+            </div>
+            <div>
+              <strong>CSS Variables (Alternative)</strong>
+              <pre style="background: #f5f5f5; padding: 1rem; border-radius: 4px; margin-top: 0.5rem; overflow-x: auto;"><code>:root {
   --sap-blue: #0854a0;
   --sap-green: #107e3e;
   --sap-orange: #e26800;
@@ -322,9 +324,11 @@ element.style.color = SAP_COLORS.GREEN;</code></pre>
 }
 
 .success { color: var(--sap-green); }</code></pre>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </ui5-page>
   `;
 
   setTimeout(() => {

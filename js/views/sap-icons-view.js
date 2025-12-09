@@ -110,115 +110,131 @@ export function showSapIconsViewSimple() {
     { code: '&#xe0e6;', hex: 'e0e6', name: 'settings' }
   ];
 
-  content.innerHTML = `
-    <div class="toolbar">
-      <h2 style="margin: 0;">✨ SAP UI5 Icons Showcase</h2>
-    </div>
+  // Define categories
+  const categories = {
+    "Charts & Data": [
+      "bar-chart", "table-view", "chart-table-view", "filter", "sort",
+      "sort-ascending", "sort-descending", "synchronize", "map", "globe"
+    ],
+    "Documents": [
+      "document", "folder", "open-folder", "pdf-attachment", "excel-attachment",
+      "word-text", "ppt-attachment", "attachment", "course-book",
+      "course-program", "study-leave", "education"
+    ],
+    "Actions": [
+      "action-settings", "search", "refresh", "download", "upload", "add",
+      "delete", "edit", "save", "cancel", "accept", "decline", "undo",
+      "redo", "copy", "paste", "create", "display", "activate", "settings"
+    ],
+    "People": [
+      "home", "customer", "employee", "person-placeholder", "group",
+      "contacts", "collaborator", "org-chart"
+    ],
+    "Commerce": [
+      "cart", "basket", "credit-card", "money-bills", "sales-order",
+      "sales-quote", "product", "inventory", "retail-store", "leads"
+    ],
+    "Time & Tasks": [
+      "calendar", "clock", "stopwatch", "timesheet", "history", "task",
+      "checklist", "checklist-item", "complete", "to-do-list", "date-time",
+      "time-entry-request", "gantt-bars", "project-definition-triangle",
+      "workflow-tasks"
+    ],
+    "Communication": [
+      "information", "warning", "email", "inbox", "outbox", "phone",
+      "fax-machine", "share", "post", "comment", "alert", "notification",
+      "flag", "bookmark", "favorite", "unfavorite", "tag", "discussion",
+      "message-information"
+    ],
+    "Logistics": [
+      "shipping-status", "truck", "flight", "car-rental", "subway-train",
+      "factory", "building"
+    ]
+  };
 
-    <div class="message message-info">
-      Displaying <strong>${sapIcons.length}</strong> SAP UI5 icons with their codes and names.
-      Click any icon to copy its HTML entity code.
-    </div>
+  // Build the icons HTML grouped by category
+  let categoriesHtml = '';
+  let totalIcons = 0;
 
-    <div class="card">
-      <div class="card-header">SAP-icons Font Family</div>
-      <p style="margin: 1rem 0; color: #666;">
-        These icons are part of the official SAP UI5 icon font. Use the HTML entity code or
-        Unicode hex value to display them in your application.
-      </p>
+  for (const [categoryName, iconNames] of Object.entries(categories)) {
+    // Find icon objects for this category
+    const categoryIcons = iconNames
+      .map(name => sapIcons.find(icon => icon.name === name))
+      .filter(icon => icon !== undefined);
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
-        ${sapIcons.map(icon => `
-          <div class="icon-showcase-item" data-code="${icon.code}" title="Click to copy code">
-            <div class="icon-showcase-icon sap-icon">${icon.code}</div>
-            <div class="icon-showcase-name">${icon.name}</div>
-            <div class="icon-showcase-code">${icon.code}</div>
-            <div class="icon-showcase-hex">U+${icon.hex.toUpperCase()}</div>
+    if (categoryIcons.length > 0) {
+      totalIcons += categoryIcons.length;
+
+      categoriesHtml += `
+        <div style="margin-top: 2rem;">
+          <h3 style="color: #0854a0; font-size: 1.1rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem; margin-bottom: 1rem;">
+            ${categoryName}
+          </h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem;">
+            ${categoryIcons.map(icon => `
+              <div class="icon-showcase-item" data-code="${icon.code}" title="Click to copy code">
+                <ui5-icon name="${icon.name}" class="icon-showcase-icon"></ui5-icon>
+                <div class="icon-showcase-name">${icon.name}</div>
+                <div class="icon-showcase-code">${icon.code}</div>
+                <div class="icon-showcase-hex">U+${icon.hex.toUpperCase()}</div>
+              </div>
+            `).join('')}
           </div>
-        `).join('')}
-      </div>
-    </div>
+        </div>
+      `;
+    }
+  }
 
-    <div class="card" style="margin-top: 2rem;">
-      <div class="card-header">How to Use SAP Icons</div>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
-        <div>
-          <strong>1. HTML Entity Code</strong>
-          <pre style="background: #f5f5f5; padding: 1rem; border-radius: 4px; margin-top: 0.5rem; overflow-x: auto;"><code>&lt;span class="sap-icon"&gt;&amp;#xe0c1;&lt;/span&gt;</code></pre>
-          <p style="margin: 0.5rem 0 0 0; color: #666; font-size: 0.9rem;">
-            Most common method - works in HTML
-          </p>
-        </div>
-        <div>
-          <strong>2. Unicode Escape</strong>
-          <pre style="background: #f5f5f5; padding: 1rem; border-radius: 4px; margin-top: 0.5rem; overflow-x: auto;"><code>content: "\\e0c1";</code></pre>
-          <p style="margin: 0.5rem 0 0 0; color: #666; font-size: 0.9rem;">
-            For use in CSS ::before or ::after
-          </p>
-        </div>
-        <div>
-          <strong>3. JavaScript String</strong>
-          <pre style="background: #f5f5f5; padding: 1rem; border-radius: 4px; margin-top: 0.5rem; overflow-x: auto;"><code>const icon = "\\ue0c1";</code></pre>
-          <p style="margin: 0.5rem 0 0 0; color: #666; font-size: 0.9rem;">
-            For dynamic icon insertion
-          </p>
-        </div>
-      </div>
-    </div>
+  content.innerHTML = `
+    <ui5-page style="height: 100%;">
+      <ui5-bar slot="header" design="Header">
+        <ui5-title level="H5" slot="startContent">SAP UI5 Icons Showcase</ui5-title>
+      </ui5-bar>
 
-    <div class="card" style="margin-top: 2rem;">
-      <div class="card-header">Icon Categories</div>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
-        <div>
-          <strong>📊 Charts & Data</strong>
-          <p style="margin: 0.5rem 0 0 0; color: #666; font-size: 0.9rem;">
-            bar-chart, table-view, chart-table-view, filter, sort
-          </p>
+      <div style="padding: 1rem;">
+        <div class="message message-info">
+          Displaying <strong>${totalIcons}</strong> SAP UI5 icons in <strong>${Object.keys(categories).length}</strong> categories.
+          Click any icon to copy its HTML entity code.
         </div>
-        <div>
-          <strong>🗂️ Documents</strong>
-          <p style="margin: 0.5rem 0 0 0; color: #666; font-size: 0.9rem;">
-            document, folder, pdf-attachment, excel-attachment, word-text
+
+        <div class="card">
+          <div class="card-header">SAP-icons Font Family</div>
+          <p style="margin: 1rem 0; color: #666;">
+            These icons are part of the official SAP UI5 icon font. Use the HTML entity code or
+            Unicode hex value to display them in your application.
           </p>
+
+          ${categoriesHtml}
         </div>
-        <div>
-          <strong>✏️ Actions</strong>
-          <p style="margin: 0.5rem 0 0 0; color: #666; font-size: 0.9rem;">
-            add, delete, edit, save, cancel, accept, decline
-          </p>
-        </div>
-        <div>
-          <strong>👥 People</strong>
-          <p style="margin: 0.5rem 0 0 0; color: #666; font-size: 0.9rem;">
-            employee, person-placeholder, group, contacts, org-chart
-          </p>
-        </div>
-        <div>
-          <strong>🛒 Commerce</strong>
-          <p style="margin: 0.5rem 0 0 0; color: #666; font-size: 0.9rem;">
-            cart, basket, credit-card, money-bills, product
-          </p>
-        </div>
-        <div>
-          <strong>⏰ Time & Tasks</strong>
-          <p style="margin: 0.5rem 0 0 0; color: #666; font-size: 0.9rem;">
-            calendar, clock, stopwatch, timesheet, task, checklist
-          </p>
-        </div>
-        <div>
-          <strong>🌐 Communication</strong>
-          <p style="margin: 0.5rem 0 0 0; color: #666; font-size: 0.9rem;">
-            email, phone, comment, share, post, notification
-          </p>
-        </div>
-        <div>
-          <strong>🚚 Logistics</strong>
-          <p style="margin: 0.5rem 0 0 0; color: #666; font-size: 0.9rem;">
-            shipping-status, truck, flight, car-rental, subway-train
-          </p>
+
+        <div class="card" style="margin-top: 2rem;">
+          <div class="card-header">How to Use SAP Icons</div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
+            <div>
+              <strong>1. HTML Entity Code</strong>
+              <pre style="background: #f5f5f5; padding: 1rem; border-radius: 4px; margin-top: 0.5rem; overflow-x: auto;"><code>&lt;span class="sap-icon"&gt;&amp;#xe0c1;&lt;/span&gt;</code></pre>
+              <p style="margin: 0.5rem 0 0 0; color: #666; font-size: 0.9rem;">
+                Most common method - works in HTML
+              </p>
+            </div>
+            <div>
+              <strong>2. Unicode Escape</strong>
+              <pre style="background: #f5f5f5; padding: 1rem; border-radius: 4px; margin-top: 0.5rem; overflow-x: auto;"><code>content: "\\e0c1";</code></pre>
+              <p style="margin: 0.5rem 0 0 0; color: #666; font-size: 0.9rem;">
+                For use in CSS ::before or ::after
+              </p>
+            </div>
+            <div>
+              <strong>3. JavaScript String</strong>
+              <pre style="background: #f5f5f5; padding: 1rem; border-radius: 4px; margin-top: 0.5rem; overflow-x: auto;"><code>const icon = "\\ue0c1";</code></pre>
+              <p style="margin: 0.5rem 0 0 0; color: #666; font-size: 0.9rem;">
+                For dynamic icon insertion
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </ui5-page>
   `;
 
   // Attach click handlers to copy icon codes

@@ -11,6 +11,11 @@ import { showChartTypesViewSimple } from './views/chart-types-view.js';
 import { showUi5ComponentsViewSimple } from './views/ui5-components-view.js';
 import { showSapIconsViewSimple } from './views/sap-icons-view.js';
 import { showSapColorsViewSimple } from './views/sap-colors-view.js';
+import { showUploadCollectionViewSimple } from './views/upload-collection-view.js';
+import { showToolbarViewSimple } from './views/toolbar-view.js';
+import { showTreeViewSimple } from './views/tree-view.js';
+import { showProductSwitchViewSimple } from './views/product-switch-view.js';
+import { showCalendarViewSimple } from './views/calendar-view.js';
 import { ROUTES, MESSAGES } from './shared/constants.js';
 import { showError } from './shared/toast.js';
 
@@ -43,6 +48,11 @@ const routeConfig = {
   [ROUTES.UI5_COMPONENTS]: () => showUi5ComponentsViewSimple(),
   [ROUTES.SAP_ICONS]: () => showSapIconsViewSimple(),
   [ROUTES.SAP_COLORS]: () => showSapColorsViewSimple(),
+  [ROUTES.UPLOAD_COLLECTION]: () => showUploadCollectionViewSimple(),
+  [ROUTES.TOOLBAR]: () => showToolbarViewSimple(),
+  [ROUTES.TREE]: () => showTreeViewSimple(),
+  [ROUTES.PRODUCT_SWITCH]: () => showProductSwitchViewSimple(),
+  [ROUTES.CALENDAR]: () => showCalendarViewSimple(),
   [ROUTES.DATA]: requireData(showDataViewSimple),
   [ROUTES.ABOUT]: () => showAboutViewSimple()
 };

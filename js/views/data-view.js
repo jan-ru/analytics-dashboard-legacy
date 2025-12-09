@@ -25,33 +25,49 @@ function renderTable() {
   const columns = metrics.columns;
 
   document.getElementById('content').innerHTML = `
-    <div class="card">
-      <div class="card-header">Data Table</div>
+    <ui5-page style="height: 100%;">
+      <ui5-bar slot="header" design="Header">
+        <ui5-title level="H5" slot="startContent">Data Table</ui5-title>
+        <ui5-button icon="download" slot="endContent" id="exportBtn">Export</ui5-button>
+      </ui5-bar>
 
-      <div class="toolbar">
-        <input type="text" id="searchInput" placeholder="Search..." />
-        <button class="btn btn-primary" id="exportBtn">📥 Export</button>
+      <div style="padding: 1rem;">
+        <div class="card">
+          
+          <div class="toolbar">
+            <input type="text" id="searchInput" placeholder="Search..." />
+          </div>
+
+          <div style="overflow-x: auto;">
+            <table>
+              <thead>
+                <tr>
+                  ${columns.map(col => `<th>${col}</th>`).join('')}
+                </tr>
+              </thead>
+              <tbody>
+                ${data.map(row => `
+                  <tr>
+                    ${columns.map(col => {
+                      if (['Sales', 'Profit'].includes(col)) {
+                        const val = Number(row[col]);
+                        const displayVal = isNaN(val) ? (row[col] || '') : val.toLocaleString();
+                        return `<td style="text-align: right;">${escapeHtml(String(displayVal))}</td>`;
+                      }
+                      return `<td>${escapeHtml(String(row[col] || ''))}</td>`;
+                    }).join('')}
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+
+          <div class="message message-info">
+            Showing ${data.length} of ${window.appState.currentData.length} rows
+          </div>
+        </div>
       </div>
-
-      <table>
-        <thead>
-          <tr>
-            ${columns.map(col => `<th data-column="${col}">${col} ▲▼</th>`).join('')}
-          </tr>
-        </thead>
-        <tbody>
-          ${data.map(row => `
-            <tr>
-              ${columns.map(col => `<td>${escapeHtml(String(row[col] || ''))}</td>`).join('')}
-            </tr>
-          `).join('')}
-        </tbody>
-      </table>
-
-      <div class="message message-info">
-        Showing ${data.length} of ${window.appState.currentData.length} rows
-      </div>
-    </div>
+    </ui5-page>
   `;
 
   setTimeout(() => {
@@ -69,15 +85,7 @@ function attachHandlers() {
   const searchInput = document.getElementById('searchInput');
   const exportBtn = document.getElementById('exportBtn');
 
-  // Column sorting
-  const headers = document.querySelectorAll('th[data-column]');
-  headers.forEach(header => {
-    header.addEventListener('click', () => {
-      const column = header.getAttribute('data-column');
-      toggleSort(column);
-      renderTable();
-    });
-  });
+
 
   // Search with debounce
   if (searchInput) {

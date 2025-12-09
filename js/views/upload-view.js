@@ -12,68 +12,76 @@ export function showUploadViewSimple() {
   const content = document.getElementById(UI.CONTENT_ID);
 
   content.innerHTML = `
-    <div style="text-align: center; margin-bottom: 2rem;">
-      <h2 style="color: ${SAP_COLORS.BLUE}; margin-bottom: 0.5rem;">Welcome to Analytics Dashboard</h2>
-      <p style="color: ${SAP_COLORS.GRAY};">Upload your Excel file to start analyzing your data</p>
-    </div>
+    <ui5-page style="height: 100%;">
+      <ui5-bar slot="header" design="Header">
+        <ui5-title level="H5" slot="startContent">Upload Excel</ui5-title>
+      </ui5-bar>
 
-    <!-- Quick Action Tiles -->
-    <div class="tile-container" style="max-width: 800px; margin: 0 auto 2rem;">
-      <div class="sap-tile tile-green">
-        <div>
-          <div class="tile-header">Step 1</div>
-          <div class="tile-value" style="font-size: 1.5rem;">📁</div>
+      <div style="padding: 1rem;">
+        <div style="text-align: center; margin-bottom: 2rem;">
+          <h2 style="color: ${SAP_COLORS.BLUE}; margin-bottom: 0.5rem;">Welcome to Analytics Dashboard</h2>
+          <p style="color: ${SAP_COLORS.GRAY};">Upload your Excel file to start analyzing your data</p>
         </div>
-        <div class="tile-footer">Choose your Excel file</div>
-      </div>
 
-      <div class="sap-tile tile-orange">
-        <div>
-          <div class="tile-header">Step 2</div>
-          <div class="tile-value" style="font-size: 1.5rem;">⚙️</div>
+        <!-- Quick Action Tiles -->
+        <div class="tile-container" style="max-width: 800px; margin: 0 auto 2rem;">
+          <div class="sap-tile tile-green">
+            <div>
+              <div class="tile-header">Step 1</div>
+              <div class="tile-value" style="font-size: 1.5rem;">📁</div>
+            </div>
+            <div class="tile-footer">Choose your Excel file</div>
+          </div>
+
+          <div class="sap-tile tile-orange">
+            <div>
+              <div class="tile-header">Step 2</div>
+              <div class="tile-value" style="font-size: 1.5rem;">⚙️</div>
+            </div>
+            <div class="tile-footer">Process the data</div>
+          </div>
+
+          <div class="sap-tile tile-purple">
+            <div>
+              <div class="tile-header">Step 3</div>
+              <div class="tile-value" style="font-size: 1.5rem;">📊</div>
+            </div>
+            <div class="tile-footer">View insights</div>
+          </div>
+
+          <div class="sap-tile tile-red">
+            <div>
+              <div class="tile-header">Step 4</div>
+              <div class="tile-value" style="font-size: 1.5rem;">💾</div>
+            </div>
+            <div class="tile-footer">Export results</div>
+          </div>
         </div>
-        <div class="tile-footer">Process the data</div>
-      </div>
 
-      <div class="sap-tile tile-purple">
-        <div>
-          <div class="tile-header">Step 3</div>
-          <div class="tile-value" style="font-size: 1.5rem;">📊</div>
+        <!-- Action Tile - Upload Excel -->
+        <div style="max-width: 400px; margin: 0 auto 2rem;">
+          <div class="sap-tile action" id="uploadActionTile">
+            <div class="action-icon">${ICONS.UPLOAD}</div>
+            <div class="action-label">Upload Excel File</div>
+            <div class="action-description">Click to select ${FILE_UPLOAD.ALLOWED_EXTENSIONS.join(' or ')} file</div>
+          </div>
+          <input type="file" id="fileInput" accept="${FILE_UPLOAD.ALLOWED_EXTENSIONS.join(',')}" style="display: none;" />
         </div>
-        <div class="tile-footer">View insights</div>
-      </div>
 
-      <div class="sap-tile tile-red">
-        <div>
-          <div class="tile-header">Step 4</div>
-          <div class="tile-value" style="font-size: 1.5rem;">💾</div>
+        <div class="card" style="max-width: 600px; margin: 0 auto;">
+          <div class="card-header">Upload Excel File</div>
+
+          <div class="${UI.MESSAGE_INFO_CLASS}">
+            Upload an Excel file (${FILE_UPLOAD.ALLOWED_EXTENSIONS.join(' or ')}) to begin analyzing your data.
+            Maximum file size: ${(FILE_UPLOAD.MAX_SIZE / 1024 / 1024).toFixed(0)}MB
+          </div>
+
+          <button class="btn btn-primary" id="processBtn" disabled>Process File</button>
+
+          <div id="statusMessage"></div>
         </div>
-        <div class="tile-footer">Export results</div>
       </div>
-    </div>
-
-    <!-- Action Tile - Upload Excel -->
-    <div style="max-width: 400px; margin: 0 auto 2rem;">
-      <div class="sap-tile action" id="uploadActionTile">
-        <div class="action-icon">${ICONS.UPLOAD}</div>
-        <div class="action-label">Upload Excel File</div>
-        <div class="action-description">Click to select ${FILE_UPLOAD.ALLOWED_EXTENSIONS.join(' or ')} file</div>
-      </div>
-      <input type="file" id="fileInput" accept="${FILE_UPLOAD.ALLOWED_EXTENSIONS.join(',')}" style="display: none;" />
-    </div>
-
-    <div class="card" style="max-width: 600px; margin: 0 auto;">
-      <div class="card-header">Upload Excel File</div>
-
-      <div class="${UI.MESSAGE_INFO_CLASS}">
-        Upload an Excel file (${FILE_UPLOAD.ALLOWED_EXTENSIONS.join(' or ')}) to begin analyzing your data.
-        Maximum file size: ${(FILE_UPLOAD.MAX_SIZE / 1024 / 1024).toFixed(0)}MB
-      </div>
-
-      <button class="btn btn-primary" id="processBtn" disabled>Process File</button>
-
-      <div id="statusMessage"></div>
-    </div>
+    </ui5-page>
   `;
 
   setTimeout(() => {
